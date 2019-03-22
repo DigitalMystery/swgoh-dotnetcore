@@ -1,12 +1,12 @@
-﻿//using Swgoh.Dto;
+﻿using Swgoh.Dto.Swgoh.Dto;
 
 namespace Swgoh.Service
 {
     public class Guilds
     {
-        //public Guild GetGuild()
-        //{
-        //    return null;
-        //}
+        public Guild GetGuild()
+        {
+            return null;
+        }
     }
 }
