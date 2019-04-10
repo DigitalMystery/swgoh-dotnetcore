@@ -3,6 +3,7 @@ using Flurl.Http;
 using Flurl.Http.Configuration;
 using Newtonsoft.Json;
 using Swgoh.Dto;
+using Swgoh.Service.Constants;
 
 namespace Swgoh.Service
 {
@@ -25,7 +26,7 @@ namespace Swgoh.Service
                        $"&client_id{ConfigurationManager.AppSettings["clientId"]}" +
                        $"&client_secret{ConfigurationManager.AppSettings["clientSecret"]}";
 
-            var path = Client.BaseAddress.ToString();
+            var path = Client.BaseAddress.ToString() + UrlConstants.SignIn;
 
             var response = path.WithHeaders(new { Content_Type = "application/x-www-form-urlencoded" }).PostUrlEncodedAsync(user).Result;
 

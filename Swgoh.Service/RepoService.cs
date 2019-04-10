@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Swgoh.Service.Constants;
 
 namespace Swgoh.Service
 {
-    public class RepoService
+    public abstract class RepoService
     {
         public HttpClient Client { get; }
 
-        public RepoService(HttpClient client)
+        protected RepoService(HttpClient client)
         {
-            client.BaseAddress = new Uri("https://api.swgoh.help/auth/signin/");
+            client.BaseAddress = new Uri(UrlConstants.BaseUrl);
 
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
             
