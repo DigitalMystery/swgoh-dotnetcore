@@ -1,6 +1,6 @@
-﻿using System.Configuration;
-using Flurl.Http;
+﻿using Flurl.Http;
 using Flurl.Http.Configuration;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Swgoh.Dto;
 using Swgoh.Service.Constants;
@@ -19,14 +19,14 @@ namespace Swgoh.Service
 
         public LoginResponse Login()
         {
-            var authorizationSettings = _configuration.GetSection("SwgohAppSettings:Authorization");
-            var user = $"username={ConfigurationManager.AppSettings["AppSettings:username"]}" +
-                       $"&password{ConfigurationManager.AppSettings["password"]}" +
-                       $"&grant_type{ConfigurationManager.AppSettings["grantType"]}" +
-                       $"&client_id{ConfigurationManager.AppSettings["clientId"]}" +
-                       $"&client_secret{ConfigurationManager.AppSettings["clientSecret"]}";
+            var appSettings = _configuration.GetSection("SwgohAppSettings").Get<AppSettings>();
+            var user = $"username={appSettings.Login.UserName}" +
+                       $"&password{appSettings.Login.Password}" +
+                       $"&grant_type{appSettings.Login.GrantType}" +
+                       $"&client_id{appSettings.Login.ClientId}" +
+                       $"&client_secret{appSettings.Login.ClientSecret}";
 
-            var path = Client.BaseAddress.ToString() + UrlConstants.SignIn;
+            var path = Client.BaseAddress + UrlConstants.SignIn;
 
             var response = path.WithHeaders(new { Content_Type = "application/x-www-form-urlencoded" }).PostUrlEncodedAsync(user).Result;
 
