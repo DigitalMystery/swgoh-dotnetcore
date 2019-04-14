@@ -26,16 +26,16 @@ namespace Swgoh.Service
 
         public LoginResponse Login()
         {
-            var appSettings = _configuration.GetSection("SwgohAppSettings").Get<AppSettings>();
-            var user = $"username={appSettings.Login.UserName}" +
-                       $"&password={appSettings.Login.Password}" +
-                       $"&grant_type={appSettings.Login.GrantType}" +
-                       $"&client_id={appSettings.Login.ClientId}" +
-                       $"&client_secret={appSettings.Login.ClientSecret}";
+            var appSettings = Configuration.GetSection("SwgohAppSettings").Get<AppSettings>();
+            var user = $"{UrlConstants.Username}={appSettings.Login.UserName}" +
+                       $"&{UrlConstants.Password}={appSettings.Login.Password}" +
+                       $"&{UrlConstants.GrantType}={appSettings.Login.GrantType}" +
+                       $"&{UrlConstants.ClientId}={appSettings.Login.ClientId}" +
+                       $"&{UrlConstants.ClientSecret}={appSettings.Login.ClientSecret}";
 
             var path = Client.BaseAddress + UrlConstants.SignIn;
 
-            var response = path.WithHeaders(new { Content_Type = "application/x-www-form-urlencoded" }).PostUrlEncodedAsync(user).Result;
+            var response = path.WithHeaders(new { Content_Type = UrlConstants.FormUrlencoded }).PostUrlEncodedAsync(user).Result;
 
             var loginResponse = JsonConvert.DeserializeObject<LoginResponse>(response.Content.ReadAsStringAsync().Result);
 

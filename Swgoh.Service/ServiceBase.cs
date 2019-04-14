@@ -7,15 +7,15 @@ namespace Swgoh.Service
 {
     public abstract class ServiceBase : RepoService
     {
-        public static IConfiguration _configuration;
+        public static IConfiguration Configuration;
 
         protected ServiceBase() : base(new HttpClient())
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(AppContext.BaseDirectory))
-                .AddJsonFile("appsettings.json", optional: true);
+                .AddJsonFile("appsettings.json", true);
             
-            _configuration = builder.Build();
+            Configuration = builder.Build();
         }
     }
 }
