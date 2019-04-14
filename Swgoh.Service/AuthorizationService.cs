@@ -1,13 +1,20 @@
-﻿using Flurl.Http;
+﻿using System.Runtime.CompilerServices;
+using Flurl.Http;
 using Flurl.Http.Configuration;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Swgoh.Dto;
 using Swgoh.Service.Constants;
 
+[assembly: InternalsVisibleTo("Swgoh.Tests")]
 namespace Swgoh.Service
 {
-    public class AuthorizationService : ServiceBase
+    internal interface IAuthorizationService
+    {
+        LoginResponse Login();
+    }
+
+    internal class AuthorizationService : ServiceBase, IAuthorizationService
     {
         public AuthorizationService()
         {
@@ -21,10 +28,10 @@ namespace Swgoh.Service
         {
             var appSettings = _configuration.GetSection("SwgohAppSettings").Get<AppSettings>();
             var user = $"username={appSettings.Login.UserName}" +
-                       $"&password{appSettings.Login.Password}" +
-                       $"&grant_type{appSettings.Login.GrantType}" +
-                       $"&client_id{appSettings.Login.ClientId}" +
-                       $"&client_secret{appSettings.Login.ClientSecret}";
+                       $"&password={appSettings.Login.Password}" +
+                       $"&grant_type={appSettings.Login.GrantType}" +
+                       $"&client_id={appSettings.Login.ClientId}" +
+                       $"&client_secret={appSettings.Login.ClientSecret}";
 
             var path = Client.BaseAddress + UrlConstants.SignIn;
 

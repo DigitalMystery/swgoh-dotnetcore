@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Flurl.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -13,6 +14,19 @@ namespace Swgoh.Tests
     [TestClass]
     public class AuthorizationServiceTests
     {
+        private readonly IAuthorizationService _authorizationService;
+
+        public AuthorizationServiceTests()
+        {
+            _authorizationService = new AuthorizationService();
+        }
+
+        [TestMethod]
+        public void AuthorizeTest()
+        {
+            var loginResponse = _authorizationService.Login();
+        }
+
         ////private readonly AuthorizationService _authorizationService;
 
         //public AuthorizationServiceTests()

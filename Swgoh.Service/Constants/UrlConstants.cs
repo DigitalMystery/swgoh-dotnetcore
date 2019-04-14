@@ -3,6 +3,6 @@
     internal static class UrlConstants
     {
         internal static string BaseUrl = "https://api.swgoh.help/";
-        internal static string SignIn = "signin";
+        internal static string SignIn = "auth/signin/";
     }
 }
