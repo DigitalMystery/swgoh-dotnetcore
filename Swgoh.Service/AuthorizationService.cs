@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using Swgoh.Dto;
 using Swgoh.Service.Constants;
 
-[assembly: InternalsVisibleTo("Swgoh.Tests")]
 namespace Swgoh.Service
 {
     internal interface IAuthorizationService
