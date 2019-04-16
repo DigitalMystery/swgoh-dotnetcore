@@ -3,7 +3,8 @@
     internal static class UrlConstants
     {
         internal static string BaseUrl = "https://api.swgoh.help/";
-        internal static string FormUrlencoded = "application/x-www-form-urlencoded";
+        internal static string ApplicationJson = "application/json";
+        internal static string ApplicationUrlencoded = "application/x-www-form-urlencoded";
         internal static string Player = "swgoh/player/";
         internal static string SignIn = "auth/signin/";
 

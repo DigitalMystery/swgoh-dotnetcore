@@ -7,8 +7,9 @@ namespace Swgoh.Service.Services
     public class SwgohService
     {
         private readonly IPlayerService _playerService;
+        private static readonly ISwgohFlurlService SwgohFlurlService;
 
-        public SwgohService() : this(new PlayerService()) { }
+        public SwgohService() : this(new PlayerService(SwgohFlurlService)) { }
 
         private SwgohService(IPlayerService playerService)
         {

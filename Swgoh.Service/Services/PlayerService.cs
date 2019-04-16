@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Flurl.Http;
 using Newtonsoft.Json;
 using Swgoh.Dto;
 using Swgoh.Dto.Requests;
@@ -17,12 +16,18 @@ namespace Swgoh.Service.Services
 
     internal class PlayerService : ServiceBase, IPlayerService
     {
+        private readonly ISwgohFlurlService _swgohFlurlService;
+
+        public PlayerService(ISwgohFlurlService swgohFlurlService)
+        {
+            _swgohFlurlService = swgohFlurlService;
+        }
+
         public Player GetPlayer(PlayerRequest playerRequest)
         {
             var path = Client.BaseAddress + UrlConstants.Player;
-            var response = path.WithHeaders(new { Content_Type = "application/json", Authorization = Token }).PostJsonAsync(playerRequest).Result;
 
-            var result = response.Content.ReadAsStringAsync().Result;
+            var result = _swgohFlurlService.SwgohPost(path, playerRequest);
 
             var players = JsonConvert.DeserializeObject<List<Player>>(result);
 

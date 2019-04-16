@@ -1,9 +1,7 @@
-﻿using Flurl.Http;
-using Flurl.Http.Configuration;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
 using Swgoh.Dto;
 using Swgoh.Service.Constants;
+using Swgoh.Service.Services;
 
 namespace Swgoh.Service
 {
@@ -14,12 +12,11 @@ namespace Swgoh.Service
 
     internal class AuthorizationService : ServiceBase, IAuthorizationService
     {
-        public AuthorizationService()
+        private readonly ISwgohFlurlService _swgohFlurlService;
+
+        public AuthorizationService(ISwgohFlurlService swgohFlurlService)
         {
-            FlurlHttp.Configure(c =>
-            {
-                c.JsonSerializer = new NewtonsoftJsonSerializer(new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            });
+            _swgohFlurlService = swgohFlurlService;
         }
 
         public LoginResponse Login()
@@ -33,12 +30,10 @@ namespace Swgoh.Service
 
             var path = Client.BaseAddress + UrlConstants.SignIn;
 
-            var response = path.WithHeaders(new { Content_Type = UrlConstants.FormUrlencoded }).PostUrlEncodedAsync(user).Result;
-
-            var loginResponse = JsonConvert.DeserializeObject<LoginResponse>(response.Content.ReadAsStringAsync().Result);
+            var loginResponse = _swgohFlurlService.AuthPost(path, user);
 
             Token = $"Bearer {loginResponse.AccessToken}";
-
+            
             return loginResponse;
         }
     }
