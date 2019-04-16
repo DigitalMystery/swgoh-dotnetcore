@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Flurl.Http;
+﻿using Flurl.Http;
 using Flurl.Http.Configuration;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -37,6 +36,8 @@ namespace Swgoh.Service
             var response = path.WithHeaders(new { Content_Type = UrlConstants.FormUrlencoded }).PostUrlEncodedAsync(user).Result;
 
             var loginResponse = JsonConvert.DeserializeObject<LoginResponse>(response.Content.ReadAsStringAsync().Result);
+
+            Token = $"Bearer {loginResponse.AccessToken}";
 
             return loginResponse;
         }

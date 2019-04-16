@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Swgoh.Dto;
+using Swgoh.Dto.Requests;
 
 namespace Swgoh.Service.Services
 {
@@ -14,9 +15,9 @@ namespace Swgoh.Service.Services
             this._playerService = playerService;
         }
 
-        public Player GetPlayer()
+        public Player GetPlayer(PlayerRequest playerRequest)
         {
-            return _playerService.GetPlayer();
+            return _playerService.GetPlayer(playerRequest);
         }
 
         public List<Player> GetPlayers()

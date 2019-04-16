@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Net.Http;
@@ -7,7 +8,9 @@ using Flurl.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Swgoh.Dto.Requests;
 using Swgoh.Service;
+using Swgoh.Service.Services;
 
 namespace Swgoh.Tests
 {
@@ -15,16 +18,22 @@ namespace Swgoh.Tests
     public class AuthorizationServiceTests
     {
         private readonly IAuthorizationService _authorizationService;
+        private readonly IPlayerService _playerService; 
 
         public AuthorizationServiceTests()
         {
             _authorizationService = new AuthorizationService();
+            _playerService = new PlayerService();
         }
 
         [TestMethod]
         public void AuthorizeTest()
         {
             var loginResponse = _authorizationService.Login();
+
+            var playerRequest = new PlayerRequest {AllyCodes = new List<int> {254217962}};
+
+            var player = _playerService.GetPlayer(playerRequest);
         }
 
         ////private readonly AuthorizationService _authorizationService;

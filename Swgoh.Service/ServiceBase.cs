@@ -8,6 +8,7 @@ namespace Swgoh.Service
     public abstract class ServiceBase : RepoService
     {
         public static IConfiguration Configuration;
+        public static string Token { get; set; }
 
         protected ServiceBase() : base(new HttpClient())
         {

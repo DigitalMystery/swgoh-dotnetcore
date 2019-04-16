@@ -4,6 +4,7 @@
     {
         internal static string BaseUrl = "https://api.swgoh.help/";
         internal static string FormUrlencoded = "application/x-www-form-urlencoded";
+        internal static string Player = "swgoh/player/";
         internal static string SignIn = "auth/signin/";
 
         internal static string ClientId = "client_id";
