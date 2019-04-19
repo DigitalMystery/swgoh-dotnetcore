@@ -10,7 +10,7 @@ namespace Swgoh.Service.Services
     internal interface ISwgohFlurlService
     {
         LoginResponse AuthPost(string path, string user);
-        string SwgohPost(string path, PlayerRequest playerRequest);
+        string SwgohPost(string path, PlayersRequest playersRequest);
     }
 
     internal class SwgohFlurlService : ServiceBase, ISwgohFlurlService
@@ -32,9 +32,9 @@ namespace Swgoh.Service.Services
             return loginResponse;
         }
 
-        public string SwgohPost(string path, PlayerRequest playerRequest)
+        public string SwgohPost(string path, PlayersRequest playersRequest)
         {
-            var response = path.WithHeaders(new { Content_Type = UrlConstants.ApplicationJson, Authorization = Token }).PostJsonAsync(playerRequest).Result;
+            var response = path.WithHeaders(new { Content_Type = UrlConstants.ApplicationJson, Authorization = Token }).PostJsonAsync(playersRequest).Result;
 
             var result = response.Content.ReadAsStringAsync().Result;
 

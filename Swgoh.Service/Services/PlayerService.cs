@@ -27,7 +27,16 @@ namespace Swgoh.Service.Services
         {
             var path = Client.BaseAddress + UrlConstants.Player;
 
-            var result = _swgohFlurlService.SwgohPost(path, playerRequest);
+            var playersRequest = new PlayersRequest
+            {
+                AllyCodes = new List<int> {playerRequest.AllyCode},
+                Language = playerRequest.Language,
+                Enums = playerRequest.Enums,
+                Structure = playerRequest.Structure,
+                Project = playerRequest.Project
+            };
+
+            var result = _swgohFlurlService.SwgohPost(path, playersRequest);
 
             var players = JsonConvert.DeserializeObject<List<Player>>(result);
 
