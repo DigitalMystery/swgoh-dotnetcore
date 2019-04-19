@@ -9,7 +9,7 @@ script:
     - dotnet build
     - dotnet test
 after_script:
-    - dotnet test
+    - dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
     - pip install --user awscli
     - export PATH=$PATH:$HOME/.local/bin
     - aws ecr get-login --region us-west-2 --no-include-email
