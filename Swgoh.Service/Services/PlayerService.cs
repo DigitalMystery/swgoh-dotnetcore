@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Swgoh.Dto;
@@ -11,22 +10,22 @@ namespace Swgoh.Service.Services
     internal interface IPlayerService
     {
         Player GetPlayer(PlayerRequest playerRequest);
-        List<Player> GetPlayers();
+        List<Player> GetPlayers(PlayersRequest playersRequest);
     }
 
     internal class PlayerService : ServiceBase, IPlayerService
     {
         private readonly ISwgohFlurlService _swgohFlurlService;
+        private readonly string _path;
 
         public PlayerService(ISwgohFlurlService swgohFlurlService)
         {
             _swgohFlurlService = swgohFlurlService;
+            _path = Client.BaseAddress + UrlConstants.Player;
         }
 
         public Player GetPlayer(PlayerRequest playerRequest)
         {
-            var path = Client.BaseAddress + UrlConstants.Player;
-
             var playersRequest = new PlayersRequest
             {
                 AllyCodes = new List<int> {playerRequest.AllyCode},
@@ -36,16 +35,24 @@ namespace Swgoh.Service.Services
                 Project = playerRequest.Project
             };
 
-            var result = _swgohFlurlService.SwgohPost(path, playersRequest);
-
-            var players = JsonConvert.DeserializeObject<List<Player>>(result);
+            var players = PostAndDeserializedPlayers(playersRequest);
 
             return players.FirstOrDefault();
         }
 
-        public List<Player> GetPlayers()
+        public List<Player> GetPlayers(PlayersRequest playersRequest)
         {
-            throw new NotImplementedException();
+            var players = PostAndDeserializedPlayers(playersRequest);
+
+            return players;
+        }
+
+        private List<Player> PostAndDeserializedPlayers(PlayersRequest playersRequest)
+        {
+            var result = _swgohFlurlService.SwgohPost(_path, playersRequest);
+
+            var players = JsonConvert.DeserializeObject<List<Player>>(result);
+            return players;
         }
     }
 }

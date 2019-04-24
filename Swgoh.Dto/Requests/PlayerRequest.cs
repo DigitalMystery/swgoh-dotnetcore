@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Swgoh.Dto.Requests
+﻿namespace Swgoh.Dto.Requests
 {
     public class PlayerRequest : BaseRequest
     {

@@ -21,9 +21,9 @@ namespace Swgoh.Service.Services
             return _playerService.GetPlayer(playerRequest);
         }
 
-        public List<Player> GetPlayers()
+        public List<Player> GetPlayers(PlayersRequest playersRequest)
         {
-            return _playerService.GetPlayers();
+            return _playerService.GetPlayers(playersRequest);
         }
     }
 }
